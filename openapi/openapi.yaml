@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: "3.0.0"
 info:
   title: "Hello API"
   version: "0.1.0"
@@ -19,6 +19,4 @@ paths:
               schema:
                 type: object
                 properties:
-                  status:
-                    type: string
-                    example: "ok"
+                status: { type: string, example: "ok" }
