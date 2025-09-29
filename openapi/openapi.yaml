@@ -8,7 +8,7 @@ servers:
 paths:
   /health:
     get:
-      Summary: "Health check"
+      summary: "Health check"
       description: "服務是否正常"
       security: []
       responses:
@@ -19,4 +19,6 @@ paths:
               schema:
                 type: object
                 properties:
-                status: { type: string, example: "ok" } #payload
+                  status:
+                    type: string
+                    example: "ok"
