@@ -3,8 +3,8 @@ info:
   title: "Hello API"
   version: "0.1.0"
 servers:
-  url: "https://api.example.edu/api/v1"
-  description: "Production"
+  - url: "https://api.example.edu/api/v1"
+    description: "Production"
 paths:
   /health:
     get:
