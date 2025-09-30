@@ -1,6 +1,6 @@
-<https://github.com/An20040128/wsse-student-enrollment-labs-2025><br>
+https://github.com/An20040128/wsse-student-enrollment-labs-2025<br>
 
-<https://github.com/An20040128/wsse-student-enrollment-labs-2025/pull/1><br>
+https://github.com/An20040128/wsse-student-enrollment-labs-2025/pull/1<br>
 
 ![image]([picture or gif url](https://github.com/An20040128/wsse-student-enrollment-labs-2025/blob/main/01-editor.png))<br>
 
