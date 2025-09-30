@@ -2,21 +2,61 @@ openapi: "3.0.0"
 info:
   title: "Hello API"
   version: "0.1.0"
+
 servers:
   - url: "https://api.example.edu/api/v1"
     description: "Production"
+
 tags:
   - name: health
     description: "服務健康檢查"
+  - name: students
+    description: "學生資料"
+
 externalDocs:
   description: "本課程手冊"
   url: "https://example.edu/wsse/handbook"
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+  schemas:
+    Student:
+      type: object
+      required: [id, name]
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 101
+        name:
+          type: string
+          minLength: 1
+          example: "Ann"
+    Error:
+      type: object
+      required: [code, message]
+      properties:
+        code:
+          type: string
+          example: "ERR_NOT_FOUND"
+        message:
+          type: string
+          example: "student not found"
+
+security:
+  - ApiKeyAuth: []   # 全域預設要 API Key
+
 paths:
   /health:
     get:
       summary: "Health check"
       description: "服務是否正常"
-      security: []
+      tags: [health]
+      security: []           # 覆寫：此端點匿名
       responses:
         "200":
           description: "OK"
@@ -25,74 +65,63 @@ paths:
               schema:
                 type: object
                 properties:
-                  status: { type: string, example: "ok" }
-components:
-  schemas:
-    Student:
-      type: object
-      required: [id, name]
-      properties:
-        id: { type: integer, format: int64 }
-        name: { type: string, minLength: 1 }
-paths:
+                  status:
+                    type: string
+                    example: "ok"
+
   /students:
     get:
       summary: "List students"
-      tags: [health]
+      tags: [students]
       responses:
-        "200"：
+        "200":
           description: "OK"
           content:
             application/json:
-              schema :
-                type: object
-                properties:
+              schema:
+                type: array
                 items:
-                  type: array
-                  items: { $ref: "#/components/schemas/Student" }
-components:
-  schemas :
-    Error:
-      type: object
-      required: [code, message]
-      properties:
-        code: { type: string, example: "ERR_NOT_FOUND" }
-        message: { type: string }
-paths:
-  /students:
-    get :
-    responses:
-      "500"：
-        description: "Server Error"
-        content:
-          application/json:
-            schema: { $ref: "#/components/schemas/Error" }
-paths:
-  /students:
+                  $ref: "#/components/schemas/Student"
+        "500":
+          description: "Server Error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
     post:
       summary: "Create student"
+      tags: [students]
       requestBody:
         required: true
         content:
           application/json:
-            schema: { $ref: "#/components/schemas/Student" }
+            schema:
+              $ref: "#/components/schemas/Student"
             examples:
-              ok: { value: { id: 101, name: "Ann" } }
+              ok:
+                value: { id: 101, name: "Ann" }
       responses:
-        "201"：
+        "201":
           description: "Created"
           headers:
             Location:
               description: "新資源 URL（例如 /api/v1/students/101）"
-              schema: { type: string }
-components:
-  securitySchemes:
-    ApiKeyAuth: { type: apiKey, in: header, name: X-API-Key }
-security:
-  - ApiKeyAuth: []
-# 全域預設要 API Key
-paths:
-  /health:
-    get :
-      security: []
-# 覆寫：此端點匿名
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Student"
+        "400":
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: "Server Error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
