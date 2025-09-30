@@ -1,5 +1,5 @@
 ## 1) Repo 連結
-- https://github.com/<你的帳號>/wsse-student-enrollment-labs-2025
+- https://github.com/An20040128/wsse-student-enrollment-labs-2025
 
 ## 2) PR 連結（至少 1 個通過 CI 的 PR）
 - https://github.com/An20040128/wsse-student-enrollment-labs-2025/pull/1<br>
